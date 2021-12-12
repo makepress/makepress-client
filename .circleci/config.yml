@@ -1,0 +1,54 @@
+version: 2.1
+
+workflows:
+  version: 2
+  node:
+    jobs:
+      - test
+      - makepress-orb/release-please-single:
+          context: [lulubot]
+      - build-and-publish-main:
+          context: [aws]
+          requires:
+            - test
+            - makepress-orb/release-please-single
+          filters:
+            branches:
+              only:
+                - main
+      - build-and-publish-tagged:
+          context: [aws]
+          requires:
+            - test
+            - makepress-orb/release-please-single
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+jobs:
+  test:
+    docker: 
+      - image: cimg/node:17.2.0
+    steps:
+      - checkout
+      - run: |
+          yarn install
+          yarn test-ci
+  build-and-publish-main:
+    executor: aws-ecr/default
+    steps:
+      - checkout
+      - aws-ecr/build-and-push-image:
+          repo: makepress-client
+          create-repo: true
+  build-and-publish-tagged:
+    executor: aws-ecr/default
+    steps:
+      - aws-ecr/build-and-push-image:
+          repo: makepress-client
+          create-repo: true
+          tag: ${CIRCLE_TAG/v/''}
+orbs:
+  makepress-orb: makepress/makepress-orb@2.2.0
+  aws-ecr: circleci/aws-ecr@7.3.0
