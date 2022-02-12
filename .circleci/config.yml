@@ -7,12 +7,12 @@ workflows:
       - test
       - makepress-orb/release-please-single:
           context: [lulubot]
+          language: "node"
       - build-and-publish-main:
           context: [aws]
           requires:
             - test
-            - makepress-orb/release-please-single:
-                language: "node"
+            - makepress-orb/release-please-single
           filters:
             branches:
               only:
@@ -21,8 +21,7 @@ workflows:
           context: [aws]
           requires:
             - test
-            - makepress-orb/release-please-single:
-                language: "node"
+            - makepress-orb/release-please-single
           filters:
             tags:
               only: /^v.*/
