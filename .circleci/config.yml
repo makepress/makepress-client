@@ -11,7 +11,8 @@ workflows:
           context: [aws]
           requires:
             - test
-            - makepress-orb/release-please-single
+            - makepress-orb/release-please-single:
+                language: "node"
           filters:
             branches:
               only:
@@ -20,7 +21,8 @@ workflows:
           context: [aws]
           requires:
             - test
-            - makepress-orb/release-please-single
+            - makepress-orb/release-please-single:
+                language: "node"
           filters:
             tags:
               only: /^v.*/
