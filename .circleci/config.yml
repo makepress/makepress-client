@@ -2,12 +2,16 @@ version: 2.1
 
 workflows:
   version: 2
-  node:
+  branch:
     jobs:
       - test
       - makepress-orb/release-please-single:
           context: [lulubot]
           language: "node"
+          filters:
+            branches:
+              only:
+                - main
       - build-and-publish-main:
           context: [aws]
           requires:
@@ -17,16 +21,18 @@ workflows:
             branches:
               only:
                 - main
+  release:
+    jobs:
       - build-and-publish-tagged:
           context: [aws]
-          requires:
+          requires;
             - test
             - makepress-orb/release-please-single
           filters:
             tags:
-              only: /^v.*/
+              only: /^.*/
             branches:
-              ignore: /.*/
+              ingore: /.*/
 jobs:
   test:
     docker: 
