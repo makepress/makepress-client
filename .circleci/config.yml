@@ -32,7 +32,7 @@ workflows:
             tags:
               only: /^.*/
             branches:
-              ingore: /.*/
+              ignore: /.*/
 jobs:
   test:
     docker: 
