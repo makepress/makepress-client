@@ -26,7 +26,6 @@ workflows:
       - build-and-publish-tagged:
           context: [aws]
           requires:
-            - test
             - makepress-orb/release-please-single
           filters:
             tags:
