@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.1](https://www.github.com/makepress/makepress-client/compare/v1.0.0...v1.0.1) (2022-02-13)
+
+
+### Bug Fixes
+
+* **ci:** fix type in ci config ([59fec31](https://www.github.com/makepress/makepress-client/commit/59fec31fc891ccb3f339cc939f0a973550eb5de7))
+
 ## 1.0.0 (2022-02-13)
 
 
